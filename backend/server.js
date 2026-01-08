@@ -1,14 +1,15 @@
-const express = require("express");
-const cors = require("cors");
+const allowed = [
+  "http://localhost:5173",
+  "https://to-do-list-mern-pink.vercel.app"
+];
 
-const tasksRouter = require("./routes/tasks");
+app.use(
+  cors({
+    origin: allowed,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+    credentials: false
+  })
+);
 
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.get("/", (req, res) => res.send("OK"));
-app.use("/tasks", tasksRouter);
-
-module.exports = app;
+app.options("*", cors());
